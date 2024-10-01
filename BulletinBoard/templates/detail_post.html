@@ -1,0 +1,33 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <h1>{{ post.title }}</h1>
+    <p>Категория: {{ post.category }}</p>
+    <p>Автор: {{ post.author }}</p>
+    <p>Дата создания: {{ post.created_ad }}</p>
+    <p>Дата обновления: {{ post.updated_ad }}</p>
+    <div>
+        {{ post.text|safe }}
+    </div>
+    <h2>Отклики:</h2>
+    <ul>
+        {% for response in post.response_set.all %}
+            <li>
+                <p>{{ response.text }}</p>
+                <p>Автор: {{ response.user }}</p>
+                <p>Дата создания: {{ response.created_ad }}</p>
+                <p>Статус: {{ response.status }}</p>
+                {% if response.status == 'pending' %}
+                    <a href="{% url 'accept_response' response.id %}">Принять</a>
+                    <a href="{% url 'reject_response' response.id %}">Отклонить</a>
+                {% endif %}
+            </li>
+        {% endfor %}
+    </ul>
+    <h2>Оставить отклик:</h2>
+    <form method="post">
+        {% csrf_token %}
+        <textarea name="text"></textarea>
+        <input type="submit" value="Отправить">
+    </form>
+{% endblock %}

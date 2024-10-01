@@ -1,0 +1,37 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <h1>Доска объявлений</h1>
+    <ul>
+        {% for post in posts %}
+            <li>
+                <h2>{{ post.title }}</h2>
+                <p>{{ post.text }}</p>
+                <p>Категория: {{ post.category }}</p>
+                <p>Автор: {{ post.author }}</p>
+                <a href="{% url 'detail_post' post.id %}">Подробнее</a>
+            </li>
+        {% endfor %}
+    </ul>
+    <form method="post">
+        {% csrf_token %}
+        <label for="title">Заголовок:</label>
+        <input type="text" id="title" name="title"><br><br>
+        <label for="text">Текст:</label>
+        <textarea id="text" name="text"></textarea><br><br>
+        <label for="category">Категория:</label>
+        <select id="category" name="category">
+            <option value="Танки">Танки</option>
+            <option value="Хилы">Хилы</option>
+            <option value="ДД">ДД</option>
+            <option value="Торговцы">Торговцы</option>
+            <option value="Гилдмастеры">Гилдмастеры</option>
+            <option value="Квестгиверы">Квестгиверы</option>
+            <option value="Кузнецы">Кузнецы</option>
+            <option value="Кожевники">Кожевники</option>
+            <option value="Зельевары">Зельевары</option>
+            <option value="Мастера заклинаний">Мастера заклинаний</option>
+        </select><br><br>
+        <input type="submit" value="Создать пост">
+    </form>
+{% endblock %}
