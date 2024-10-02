@@ -9,6 +9,7 @@
                 <p>{{ post.text }}</p>
                 <p>Категория: {{ post.category }}</p>
                 <p>Автор: {{ post.author }}</p>
+                <p>Статус: {{ post.status }}</p>
                 <a href="{% url 'detail_post' post.id %}">Подробнее</a>
             </li>
         {% endfor %}

@@ -119,15 +119,10 @@ USE_I18N = True
 USE_TZ = True
 
 
-# Static files (CSS, JavaScript, Images)
-# https://docs.djangoproject.com/en/4.2/howto/static-files/
-
-STATIC_URL = 'static/'
-
-STATICFILES_DIRS = [
-   os.path.join(BASE_DIR, "static"),
-]
-#STATIC_ROOT = (BASE_DIR / 'static')
+# Stat
+STATIC_URL = '/static/'
+STATICFILES_DIRS = [BASE_DIR / 'static']
+# STATIC_ROOT = (BASE_DIR / 'static')
 
 MEDIA_ROOT = (BASE_DIR / 'media')
 MEDIA_URL = '/media/'
@@ -164,6 +159,7 @@ customColorPalette = [
             'label': 'Blue'
         },
     ]
+
 
 CKEDITOR_5_CUSTOM_CSS = '' # optional
 CKEDITOR_5_FILE_STORAGE = "" # optional
@@ -227,4 +223,6 @@ CKEDITOR_5_CONFIGS = {
         }
     }
 }
+# CKEDITOR
+CKEDITOR_UPLOAD_PATH = "uploads/"
 CKEDITOR_5_UPLOAD_FILE_TYPES = ['jpeg', 'jpg', 'png']

@@ -1,8 +1,10 @@
 from django.contrib import admin
 from .models import Post, Response
 
+
 @admin.register(Post)
 class PostAdmin(admin.ModelAdmin):
+
     list_display = ('category', 'title', 'created_ad')
     search_fields = ('title', 'text')
     list_filter = ('category',)
