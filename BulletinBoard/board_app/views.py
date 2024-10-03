@@ -4,9 +4,6 @@ from .models import Post
 def home(request):
     posts = Post.objects.all()
     return render(request, 'home.html', {'posts': posts})
-def site1(request):
-    return render(request, 'Site1/index.html')
-
 def detail_post(request, post_id):
     post = Post.objects.get(id=post_id)
     return render(request, 'detail_post.html', {'post': post})
