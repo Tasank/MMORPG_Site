@@ -13,7 +13,7 @@
     <ul>
         {% for response in post.response_set.all %}
             <li>
-                <p>{{ response.text }}</p>
+                <p>{{ response.text|safe }}</p>
                 <p>Автор: {{ response.user }}</p>
                 <p>Дата создания: {{ response.created_ad }}</p>
                 <p>Статус: {{ response.status }}</p>

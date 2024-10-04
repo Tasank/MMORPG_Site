@@ -28,6 +28,9 @@ class Post(models.Model):
     created_ad = models.DateTimeField(auto_now_add=True)
     updated_ad = models.DateTimeField(auto_now=True)
 
+    def __str__(self):
+        return self.title
+
 
 # Класс отклика
 class Response(models.Model):

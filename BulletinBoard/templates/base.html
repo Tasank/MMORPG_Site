@@ -1,28 +1,33 @@
 {% load static %}
-
+<script src="{% static 'django_ckeditor_5/src/ckeditor.js' %}"></script>
 <!DOCTYPE html>
 <html lang="ru">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Доска объявлений</title>
-    <link rel="stylesheet" href="{% static 'styles.css' %}"></head>
+    <link rel="stylesheet" href="{% static 'styles.css' %}">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:400,500,700|Montserrat:400,500,700">
+    <meta name="description" content="Доска объявлений для фанатского сервера MMORPG">
+    <meta name="keywords" content="MMORPG, объявления, регистрация, отклики">
+    <meta name="theme-color" content="#478ac9">
+    <link rel="stylesheet" href="{% static 'django_ckeditor_5/dist/styles.css' %}">
+</head>
 <body>
     <header>
         <nav>
             <ul>
-
                 <li><a href="{% url 'home' %}">Главная</a></li>
                 <li><a href="{% url 'register' %}">Регистрация</a></li>
-
             </ul>
         </nav>
     </header>
     <main>
+        <a href="{% url 'created_post' %}">Создать объявление</a>
         {% block content %}{% endblock %}
     </main>
     <footer>
-        <p>Copyright 2023 Доска объявлений</p>
+        <p>Copyright 2024 Доска объявлений</p>
     </footer>
 </body>
 </html>

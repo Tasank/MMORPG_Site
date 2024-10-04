@@ -1,13 +1,14 @@
 from django import forms
+from django_ckeditor_5.widgets import CKEditor5Widget
 
-from .models import Post
+from .models import Post, Response
 
 
 class PostForm(forms.ModelForm):
     class Meta:
         model = Post
-        widgets = {'title': forms.TextInput(attrs={'size': '100'})}
         fields = ('category', 'title', 'text',)
+        widgets = {'text': CKEditor5Widget(config_name='default')}
 
     def __init__(self, *args, **kwargs):
         super(PostForm, self).__init__(*args, **kwargs)
@@ -16,6 +17,45 @@ class PostForm(forms.ModelForm):
         self.fields['text'].label = "Текст объявления:"
 
 
+class PostCreateForm(forms.ModelForm):
+    """
+    Форма добавления статей на сайте
+    """
+
+    class Meta:
+        model = Post
+        fields = ('title', 'category', 'text', )
+        widgets = {'text': CKEditor5Widget(config_name='default')}
+
+    def __init__(self, *args, **kwargs):
+        """
+        Обновление стилей формы под Bootstrap
+        """
+        super().__init__(*args, **kwargs)
+        for field in self.fields:
+            self.fields[field].widget.attrs.update({'class': 'form-control', 'autocomplete': 'off'})
+
+        self.fields['text'].widget.attrs.update({'class': 'form-control django_ckeditor_5'})
+        self.fields['text'].required = False
+
+
+class PostUpdateForm(PostCreateForm):
+    """
+    Форма обновления статьи на сайте
+    """
+
+    class Meta:
+        model = Post
+        fields = ('title', 'category', 'text', )
+
+    def __init__(self, *args, **kwargs):
+        """
+        Обновление стилей формы под Bootstrap
+        """
+        super().__init__(*args, **kwargs)
+
+        self.fields['text'].widget.attrs.update({'class': 'form-control django_ckeditor_5'})
+        self.fields['text'].required = False
 class RespondForm(forms.ModelForm):
     class Meta:
         model = Response
