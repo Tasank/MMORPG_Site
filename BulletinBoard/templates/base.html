@@ -14,20 +14,24 @@
     <link rel="stylesheet" href="{% static 'django_ckeditor_5/dist/styles.css' %}">
 </head>
 <body>
-    <header>
-        <nav>
-            <ul>
-                <li><a href="{% url 'home' %}">Главная</a></li>
-                <li><a href="{% url 'register' %}">Регистрация</a></li>
-            </ul>
-        </nav>
-    </header>
-    <main>
-        <a href="{% url 'created_post' %}">Создать объявление</a>
-        {% block content %}{% endblock %}
-    </main>
-    <footer>
-        <p>Copyright 2024 Доска объявлений</p>
-    </footer>
+<header>
+    <nav>
+        <ul>
+            <li><a href="{% url 'home' %}">Главная</a></li>
+            {% if user.is_authenticated %}
+            <li><a href="{% url 'account_profile' %}">Профиль</a></li>
+            {% else %}
+            <li><a href="{% url 'account_login' %}">Регистрация</a></li>
+            {% endif %}
+        </ul>
+    </nav>
+</header>
+<main>
+    <a href="{% url 'created_post' %}">Создать объявление</a>
+    {% block content %}{% endblock %}
+</main>
+<footer>
+    <p>Copyright 2024 Доска объявлений</p>
+</footer>
 </body>
 </html>

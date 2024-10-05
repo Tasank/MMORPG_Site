@@ -24,7 +24,7 @@ class PostCreateForm(forms.ModelForm):
 
     class Meta:
         model = Post
-        fields = ('title', 'category', 'text', )
+        fields = ('title', 'category', 'text',)
         widgets = {'text': CKEditor5Widget(config_name='default')}
 
     def __init__(self, *args, **kwargs):
@@ -46,16 +46,19 @@ class PostUpdateForm(PostCreateForm):
 
     class Meta:
         model = Post
-        fields = ('title', 'category', 'text', )
+        fields = ('title', 'category', 'text',)
 
     def __init__(self, *args, **kwargs):
         """
         Обновление стилей формы под Bootstrap
         """
         super().__init__(*args, **kwargs)
+        # Цикл обновления стилей формы под Bootstrap
 
         self.fields['text'].widget.attrs.update({'class': 'form-control django_ckeditor_5'})
         self.fields['text'].required = False
+
+
 class RespondForm(forms.ModelForm):
     class Meta:
         model = Response

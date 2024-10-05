@@ -7,9 +7,9 @@
             <li>
                 <h2>{{ post.title }}</h2>
                 <p>{{ post.text|safe }}</p>
-                <p>Категория: {{ post.category }}</p>
+                <p>Категория: {{ post.get_category_display }}</p>
                 <p>Автор: {{ post.author }}</p>
-                <p>Статус: {{ post.status }}</p>
+                <p>Статус: {{ post.status|yesno:"Действителен,Объявление закрыто" }}</p>
                 <a href="{% url 'detail_post' post.id %}">Подробнее</a>
             </li>
         {% endfor %}
