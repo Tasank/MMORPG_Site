@@ -10,6 +10,12 @@
     <div>
         {{ post.text|safe }}
     </div>
+
+    {% if request.user == post.author %}
+    <a href="{% url 'delete_post' post.pk %}">Удалить пост</a>
+    <a href="{% url 'edit_post' post.pk %}">Редактировать пост</a>
+    {% endif %}
+
     <h2>Отклики:</h2>
     <ul>
         {% for response in post.response_set.all %}
