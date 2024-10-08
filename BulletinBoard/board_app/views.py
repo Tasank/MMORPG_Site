@@ -1,6 +1,7 @@
 from django.contrib.auth.models import User
 from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin
 from django.contrib.auth.decorators import login_required
+from django.core.exceptions import PermissionDenied
 from django.views.generic import ListView, UpdateView, CreateView, DetailView, DeleteView, FormView
 from django.shortcuts import redirect, get_object_or_404
 from django.http import HttpResponseRedirect, HttpResponse, HttpResponseForbidden
@@ -75,7 +76,7 @@ class EditPost(LoginRequiredMixin, PermissionRequiredMixin, UpdateView):
 
     # Используется для определения URL-адреса перенаправления после успешного обновления.
     def get_success_url(self):
-        return reverse('detail', kwargs={'id': self.object.id})
+        return reverse_lazy('detail_post', kwargs={'post_id': self.object.pk})
 
     # Если пользователь не является автором или администратором, то будет возвращено сообщение об ошибке.
     def handle_no_permission(self):
@@ -86,14 +87,18 @@ class DeletePost(PermissionRequiredMixin, DeleteView):
     permission_required = 'board.delete_post'
     template_name = 'delete_post.html'
     queryset = Post.objects.all()
-    success_url = '/home/'
+    success_url = reverse_lazy('home')
 
-    def dispatch(self, request, *args, **kwargs):
-        author = Post.objects.get(pk=self.kwargs.get('pk')).author.username
-        if self.request.user.username == 'admin' or self.request.user.username == author:
-            return super().dispatch(request, *args, **kwargs)
-        else:
-            return HttpResponse("Нет прав для удаления объявления")
+    # Это позволит избежать повторного запроса к базе данных
+    def get_object(self, queryset=None):
+        obj = super().get_object(queryset)
+        if self.request.user.username != 'admin' and self.request.user != obj.author:
+            raise PermissionDenied("Нет прав для удаления объявления")
+        return obj
+    # Использует get_object_or_404 для извлечения объекта по его идентификатору.
+    def get_object(self, **kwargs):
+        return get_object_or_404(Post, id=self.kwargs.get('id'))
+
 
 
 # Это переменная, в которой будет храниться название объявления, нужно для вывода в шаблон
