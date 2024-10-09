@@ -70,11 +70,14 @@ class RespondForm(forms.ModelForm):
 
 
 class ResponsesFilterForm(forms.Form):
+    title = forms.CharField(label='Название объявления', max_length=100, required=False)
+
     def __init__(self, user, *args, **kwargs):
-        super(ResponsesFilterForm, self).__init__(*args, **kwargs)
-        self.fields['title'] = forms.ModelChoiceField(
-            label='Объявление',
-            queryset=Post.objects.filter(author_id=user.id).order_by('-dateCreation').values_list('title', flat=True),
-            empty_label="Все",
-            required=False
-        )
+        super().__init__(*args, **kwargs)
+        self.user = user
+
+    def filter_responses(self):
+        title = self.cleaned_data.get('title')
+        if title:
+            return Response.objects.filter(post__title__icontains=title, post__author=self.user)
+        return Response.objects.filter(post__author=self.user)

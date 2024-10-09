@@ -1,17 +1,15 @@
-from django.contrib.auth.models import User
-from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin
 from django.contrib.auth.decorators import login_required
+from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin
 from django.core.exceptions import PermissionDenied
-from django.views.generic import ListView, UpdateView, CreateView, DetailView, DeleteView, FormView
+from django.http import HttpResponseForbidden
 from django.shortcuts import redirect, get_object_or_404
-from django.http import HttpResponseRedirect, HttpResponse, HttpResponseForbidden
 from django.urls import reverse, reverse_lazy
+from django.views.generic import ListView, UpdateView, CreateView, DetailView, DeleteView
 
-from .models import Post, Response
 from .forms import PostForm, PostCreateForm, RespondForm, ResponsesFilterForm, PostUpdateForm
+from .models import Post, Response
+from .task import respond_send_email, respond_accept_send_email
 
-
-# from .tasks import respond_send_email, respond_accept_send_email
 
 class PostList(ListView):
     model = Post
@@ -24,19 +22,25 @@ class PostDetail(DetailView):
     model = Post
     template_name = 'detail_post.html'
     context_object_name = 'post'
+
+    # Извлечение объекта Post по идентификатору
     def get_object(self, queryset=None):
         return get_object_or_404(Post, id=self.kwargs.get('post_id'))
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        # Используем правильное поле из модели Response
-        if Response.objects.filter(user_id=self.request.user.id).filter(post_id=self.kwargs.get('post_id')):
-            context['respond'] = "Откликнулся"
-        elif self.request.user == Post.objects.get(id=self.kwargs.get('post_id')).author:
-            context['respond'] = "Мое_объявление"
+        post = self.get_object()
+        user = self.request.user
+
         # Проверка, откликнулся ли пользователь
-        context['can_respond'] = not Response.objects.filter(user=self.request.user,
-                                                             post=self.get_object()).exists() and self.request.user != self.get_object().author
+        if Response.objects.filter(user=user, post=post).exists():
+            context['respond'] = "Откликнулся"
+        elif user == post.author:
+            context['respond'] = "Мое_объявление"
+
+        # Возможность отклика, если пользователь не является автором и ещё не откликнулся
+        context['can_respond'] = not (user == post.author or Response.objects.filter(user=user, post=post).exists())
+
         return context
 
 
@@ -46,9 +50,7 @@ class CreatePost(LoginRequiredMixin, PermissionRequiredMixin, CreateView):
     form_class = PostCreateForm
     permission_required = 'board.add_post'
 
-    # Метод, который будет вызван, если форма валидна
-    # Он будет сохранять созданный пост, и автором поста будет текущий пользователь
-    # После создания поста, будет происходить редирект на страницу созданного поста
+    # Сохранение поста с указанием текущего пользователя как автора
     def form_valid(self, form):
         post = form.save(commit=False)
         post.author = self.request.user
@@ -65,120 +67,91 @@ class EditPost(LoginRequiredMixin, PermissionRequiredMixin, UpdateView):
     form_class = PostUpdateForm
     permission_required = 'board.change_post'
 
-    # Проверяет разрешение и является ли пользователь автором или администратором.
+    # Проверка разрешений для редактирования поста
     def has_permission(self):
         obj = self.get_object()
         return super().has_permission() and (self.request.user.username == 'admin' or self.request.user == obj.author)
 
-    # Использует get_object_or_404 для извлечения объекта по его идентификатору.
     def get_object(self, **kwargs):
         return get_object_or_404(Post, id=self.kwargs.get('id'))
 
-    # Используется для определения URL-адреса перенаправления после успешного обновления.
     def get_success_url(self):
         return reverse_lazy('detail_post', kwargs={'post_id': self.object.pk})
 
-    # Если пользователь не является автором или администратором, то будет возвращено сообщение об ошибке.
     def handle_no_permission(self):
         return HttpResponseForbidden("Редактировать объявление может только его автор")
 
 
-class DeletePost(PermissionRequiredMixin, DeleteView):
-    permission_required = 'board.delete_post'
+class DeletePost(LoginRequiredMixin, PermissionRequiredMixin, DeleteView):
+    model = Post
     template_name = 'delete_post.html'
-    queryset = Post.objects.all()
+    permission_required = 'board.delete_post'
     success_url = reverse_lazy('home')
 
-    # Это позволит избежать повторного запроса к базе данных
+    # Проверка прав на удаление поста
     def get_object(self, queryset=None):
         obj = super().get_object(queryset)
         if self.request.user.username != 'admin' and self.request.user != obj.author:
             raise PermissionDenied("Нет прав для удаления объявления")
         return obj
-    # Использует get_object_or_404 для извлечения объекта по его идентификатору.
-    def get_object(self, **kwargs):
-        return get_object_or_404(Post, id=self.kwargs.get('id'))
 
 
-
-# Это переменная, в которой будет храниться название объявления, нужно для вывода в шаблон
-title = str("")
-
-
-class Responses(LoginRequiredMixin, ListView):
+class ResponsesView(LoginRequiredMixin, ListView):
     model = Response
     template_name = 'responses.html'
     context_object_name = 'responses'
 
     def get_context_data(self, **kwargs):
-        context = super(Responses, self).get_context_data(**kwargs)
-        global title
-        """
-        Далее в условии - если пользователь попал на страницу через ссылку из письма, в которой содержится
-        ID поста для фильтра - фильтр работает по этому ID
-        """
-        if self.kwargs.get('pk') and Post.objects.filter(id=self.kwargs.get('pk')).exists():
-            title = str(Post.objects.get(id=self.kwargs.get('pk')).title)
-            print(title)
-        context['form'] = ResponsesFilterForm(self.request.user, initial={'title': title})
-        context['title'] = title
+        context = super().get_context_data(**kwargs)
+        context['form'] = ResponsesFilterForm(self.request.user)
+        # Фильтрация откликов по названию объявления
+        title = self.request.GET.get('title')
+        filter_params = {'post__author': self.request.user}
         if title:
-            post_id = Post.objects.get(title=title)
-            context['filter_responses'] = list(Response.objects.filter(post_id=post_id).order_by('-dateCreation'))
-            context['response_post_id'] = post_id.id
-        else:
-            context['filter_responses'] = list(
-                Response.objects.filter(post_id__author_id=self.request.user).order_by('-dateCreation'))
-        context['myresponses'] = list(Response.objects.filter(author_id=self.request.user).order_by('-dateCreation'))
+            filter_params['posttitleicontains'] = title
+
+        context['filter_responses'] = Response.objects.filter(**filter_params).order_by('-created_ad')
+
+        # Отклики текущего пользователя
+        context['myresponses'] = Response.objects.filter(user=self.request.user).order_by('-created_ad')
         return context
 
     def post(self, request, *args, **kwargs):
-        global title
-        title = self.request.POST.get('title')
-        """
-        Далее в условии - При событии POST (если в пути открытой страницы есть ID) - нужно перезайти уже без этого ID
-        чтобы фильтр отрабатывал запрос уже из формы, так как ID, если он есть - приоритетный 
-        """
-        if self.kwargs.get('pk'):
-            return HttpResponseRedirect('/responses')
+        title = request.POST.get('title')
+        if title:
+            post = Post.objects.filter(title=title).first()
+            if post:
+                return redirect(reverse('responses') + f'?title={title}')
         return self.get(request, *args, **kwargs)
 
 
 @login_required
-def response_accept(request, **kwargs):
-    if request.user.is_authenticated:
-        response = Response.objects.get(id=kwargs.get('pk'))
-        response.status = True
-        response.save()
-        respond_accept_send_email.delay(response_id=response.id)
-        return HttpResponseRedirect('/responses')
-    else:
-        return HttpResponseRedirect('/accounts/login')
+def response_accept(request, pk):
+    response = get_object_or_404(Response, id=pk)
+    response.status = Response.STATUS_ACCEPTED
+    response.save()
+    # Отправка уведомления отклика
+    respond_accept_send_email.delay(response_id=response.id)
+    return redirect('responses')
 
 
 @login_required
-def response_delete(request, **kwargs):
-    if request.user.is_authenticated:
-        response = Response.objects.get(id=kwargs.get('pk'))
-        response.delete()
-        return HttpResponseRedirect('/responses')
-    else:
-        return HttpResponseRedirect('/accounts/login')
+def response_delete(request, pk):
+    response = get_object_or_404(Response, id=pk)
+    response.delete()
+    return redirect('responses')
 
 
-class Respond(LoginRequiredMixin, CreateView):
+class RespondCreateView(LoginRequiredMixin, CreateView):
     model = Response
     template_name = 'respond.html'
     form_class = RespondForm
 
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        return context
-
+    # Создание нового отклика и отправка уведомления
     def form_valid(self, form):
         respond = form.save(commit=False)
-        respond.author = User.objects.get(id=self.request.user.id)
-        respond.post = Post.objects.get(id=self.kwargs.get('pk'))
+        respond.user = self.request.user
+        respond.post = get_object_or_404(Post, id=self.kwargs.get('pk'))
         respond.save()
         respond_send_email.delay(respond_id=respond.id)
-        return redirect(f'/post/{self.kwargs.get("pk")}')
+        return redirect('detail_post', pk=self.kwargs.get('pk'))

@@ -34,15 +34,23 @@ class Post(models.Model):
 
 # Класс отклика
 class Response(models.Model):
+    STATUS_PENDING = 'pending'
+    STATUS_ACCEPTED = 'accepted'
+    STATUS_REJECTED = 'rejected'
+
     STATUS_CHOICES = (
-        ('pending', 'Ожидание'),
-        ('accepted', 'Принят'),
-        ('rejected', 'Отклонен'),
+        (STATUS_PENDING, 'Ожидание'),
+        (STATUS_ACCEPTED, 'Принят'),
+        (STATUS_REJECTED, 'Отклонен'),
     )
+
     post = models.ForeignKey(Post, on_delete=models.CASCADE)
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     text = models.TextField()
     status = models.CharField(max_length=10, choices=STATUS_CHOICES, default='pending')
     created_ad = models.DateTimeField(auto_now_add=True)
     updated_ad = models.DateTimeField(auto_now=True)
+
+    def __str__(self):
+        return f'Отклик на объявление "{self.post.title}" от {self.user.username}'
 
