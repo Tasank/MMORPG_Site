@@ -1,63 +1,47 @@
 {% extends 'base.html' %}
-{% load static %}
-
-{% block title %}Детали Объявления{% endblock title %}
 
 {% block content %}
-<div class="container">
-    <h3>Фильтр откликов на мои объявления:</h3>
-    <form method="GET" class="filter-form">
-        {{ form.as_p }}
-        <input class="btn btn-secondary" type="submit" value="Показать">
+    <h1>{{ post.title }}</h1>
+    <p><strong>Категория:</strong> {{ post.get_category_display }}</p>
+    <p><strong>Автор:</strong> {{ post.author }}</p>
+    <p><strong>Статус:</strong> {{ post.status|yesno:"Действителен,Объявление закрыто" }}</p>
+    <p><strong>Дата создания:</strong> {{ post.created_ad|date:"d.m.Y H:i" }}</p>
+    <p><strong>Дата обновления:</strong> {{ post.updated_ad|date:"d.m.Y H:i" }}</p>
+    <div>
+        {{ post.text|safe }}
+    </div>
+
+    {% if request.user == post.author %}
+        <div class="post-actions">
+            <a href="{% url 'delete_post' post.pk %}">Удалить пост</a>
+            <a href="{% url 'edit_post' post.pk %}">Редактировать пост</a>
+        </div>
+    {% endif %}
+
+    <h2>Отклики:</h2>
+    <ul>
+        {% for response in post.response_set.all %}
+            <li>
+                <div class="response-text">{{ response.text|safe }}</div>
+                <p><strong>Автор:</strong> {{ response.user }}</p>
+                <p><strong>Дата создания:</strong> {{ response.created_ad|date:"d.m.Y H:i" }}</p>
+                <p><strong>Статус:</strong> {{ response.get_status_display }}</p>
+                {% if response.status == 'pending' %}
+                    <div class="response-actions">
+                        <a href="{% url 'accept_response' response.id %}">Принять</a>
+                        <a href="{% url 'delete_response' response.id %}">Отклонить</a>
+                    </div>
+                {% endif %}
+            </li>
+        {% empty %}
+            <p>Откликов пока нет.</p>
+        {% endfor %}
+    </ul>
+
+    <h2>Оставить отклик:</h2>
+    <form method="post" action="{% url 'respond' post.pk %}">
+        {% csrf_token %}
+        <textarea name="text" rows="4" required></textarea>
+        <input type="submit" value="Отправить" class="btn btn-primary">
     </form>
-
-    {% if title %}
-        <h3>Отклики на мое объявление: {{ title }}</h3>
-    {% else %}
-        <h3>Отклики на все мои объявления:</h3>
-    {% endif %}
-
-    {% if filter_responses %}
-        <div class="responses-list">
-            {% for response in filter_responses %}
-                <div class="response-item">
-                    <strong>Объявление:</strong>
-                    <a href="{% url 'detail_post' response.post.id %}">{{ response.post.title }}</a><br>
-                    <strong>Отклик:</strong> {{ response.text }}<br>
-                    <strong>Автор:</strong> {{ response.user.username }}<br>
-                    <strong>Дата:</strong> {{ response.created_ad|date:'d.M.Y' }}<br>
-                    {% if response.status == 'pending' %}
-                        <a href="{% url 'accept_response' response.id %}" class="btn-accept">Принять</a>
-                        <a href="{% url 'delete_response' response.id %}" class="btn-delete">Удалить</a>
-                    {% else %}
-                        <span class="status-accepted">Отклик принят</span>
-                    {% endif %}
-                </div>
-            {% endfor %}
-        </div>
-    {% else %}
-        <h5>Откликов нет!</h5>
-    {% endif %}
-
-    <h3>Мои отклики на объявления:</h3>
-    {% if myresponses %}
-        <div class="my-responses-list">
-            {% for response in myresponses %}
-                <div class="my-response-item">
-                    <strong>Объявление:</strong>
-                    <a href="{% url 'detail_post' response.post.id %}">{{ response.post.title }}</a><br>
-                    <strong>Мой отклик:</strong> {{ response.text }}<br>
-                    <strong>Дата:</strong> {{ response.created_ad|date:'d.M.Y' }}<br>
-                    {% if response.status == 'accepted' %}
-                        <span class="status-accepted">Автор объявления принял отклик!</span>
-                    {% else %}
-                        <span class="status-pending">Автор объявления пока не принял отклик!</span>
-                    {% endif %}
-                </div>
-            {% endfor %}
-        </div>
-    {% else %}
-        <h5>Откликов нет!</h5>
-    {% endif %}
-</div>
-{% endblock content %}
+{% endblock %}
