@@ -1,12 +1,11 @@
 {% extends 'base.html' %}
 
 {% block content %}
-    <h1>Доска объявлений</h1>
+<div class="container-image">
     <ul>
         {% for post in posts %}
             <li>
                 <h2>{{ post.title }}</h2>
-                <p>{{ post.text|safe }}</p>
                 <p>Категория: {{ post.get_category_display }}</p>
                 <p>Автор: {{ post.author }}</p>
                 <p>Статус: {{ post.status|yesno:"Действителен,Объявление закрыто" }}</p>
@@ -14,4 +13,5 @@
             </li>
         {% endfor %}
     </ul>
+</div>
 {% endblock %}

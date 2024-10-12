@@ -1,0 +1,132 @@
+
+.body {
+    font-size: 16px;
+    line-height: 1.5;
+    font-family: 'Montserrat', sans-serif;
+    margin: 0;
+    padding: 0;
+    background-image: url("../imgs/background.jpg");
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
+}
+
+.header {
+    background-color: #3F3A10; /* Темно-деревянный цвет */
+    padding: 10px 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.logo {
+    display: flex;
+    align-items: center;
+    margin: 0;
+    font-size: 24px;
+}
+
+.logo-image {
+    width: 100px;
+    height: auto;
+    margin-right: 20px;
+}
+
+.nav {
+    display: flex;
+}
+.nav ul {
+    list-style: none;
+    margin: 60px;
+    padding: 0;
+    display: flex;
+}
+
+.nav li {
+    margin-right: 20px;
+}
+
+.nav a {
+    text-decoration: none;
+    color: #FFFFFF;
+    transition: color 0.2s ease;
+}
+
+.nav a:hover {
+    color: #ff6666;
+}
+
+.nav-link {
+    color: #FFFFFF;
+    text-decoration: none;
+    margin-left: 20px;
+    transition: color 0.2s ease;
+}
+
+.nav-link:hover {
+    color: #ff6666; /* Светло-красный при наведении */
+}
+
+.nav-link.active {
+    color: #40e0d0; /* Бирюзовый цвет для "Главная" */
+}
+
+.container-image {
+    max-width: 1200px;
+    margin: 40px auto;
+    padding: 20px;
+    background-image: url("../imgs/container.png");
+    background-size: cover;
+    background-position: center;
+    border: 1px solid #ddd;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+}
+
+.post-list {
+    list-style: none;
+    padding: 0;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+}
+
+.post-item {
+    width: 30%;
+    background: #fff;
+    margin-bottom: 20px;
+    padding: 15px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    background-color: #fff;
+    border-color: #ccc;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+    background-image: url("../imgs/detail_container.png");
+    background-size: cover;
+    background-position: center;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+}
+
+.post-item h2 {
+    margin-top: 0;
+}
+
+.post-item p {
+    margin: 10px 0;
+}
+
+.detail-link {
+    display: inline-block;
+    margin-top: 10px;
+    padding: 5px 10px;
+    background-color: #660000;
+    color: #fff;
+    text-decoration: none;
+    border-radius: 3px;
+    transition: background-color 0.3s ease;
+}
+
+.detail-link:hover {
+    background-color: #333;
+}
+
