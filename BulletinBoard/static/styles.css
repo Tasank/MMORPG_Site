@@ -5,7 +5,7 @@
     font-family: 'Montserrat', sans-serif;
     margin: 0;
     padding: 0;
-    background-image: url("../imgs/background.jpg");
+    background-image: url("img/background.jpg");/* путь к фоновому изображению */
     background-size: cover;
     background-position: center;
     background-attachment: fixed;
@@ -75,7 +75,7 @@
     max-width: 1200px;
     margin: 40px auto;
     padding: 20px;
-    background-image: url("../imgs/container.png");
+    background-image: url("");
     background-size: cover;
     background-position: center;
     border: 1px solid #ddd;
@@ -83,38 +83,63 @@
     overflow: hidden;
 }
 
+:root {
+    --item-width: 250px; /* ширина элемента */
+    --item-height: 370px; /* высота элемента */
+    --font-size: 16px; /* размер шрифта */
+    --gap-size: 25px; /* размер отступа */
+}
+
 .post-list {
     list-style: none;
     padding: 0;
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: space-between;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: repeat(4, var(--item-width));
+    gap: var(--gap-size);
+    justify-content: center; /* центрировать элементы */
+    max-width: calc(4 * var(--item-width) + 3 * var(--gap-size));
 }
 
 .post-item {
-    width: 30%;
-    background: #fff;
-    margin-bottom: 20px;
-    padding: 15px;
-    border: 1px solid #ccc;
+    width: var(--item-width);
+    height: var(--item-height);
+    padding: 19px;
+    border: none;
     border-radius: 5px;
-    background-color: #fff;
-    border-color: #ccc;
-    box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
-    background-image: url("../imgs/detail_container.png");
+    background-image: url("img/container.png");
     background-size: cover;
     background-position: center;
     box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+    transition: box-shadow 0.3s ease;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    color: #333;
+    font-size: var(--font-size);
+    font-weight: bold;
+    overflow: hidden; /* скрыть переполнение текста */
 }
 
-.post-item h2 {
-    margin-top: 0;
-}
-
+.post-item h2,
 .post-item p {
-    margin: 10px 0;
+    margin-top: 10px;
+    color: #333;
+    word-wrap: break-word; /* переносить длинный текст */
 }
 
+.post-item a {
+    margin-top: 10px;
+    text-decoration: none;
+    color: #007BFF;
+    transition: color 0.3s ease;
+}
+
+.post-item a:hover {
+    color: #0056b3;
+}
 .detail-link {
     display: inline-block;
     margin-top: 10px;
@@ -128,5 +153,9 @@
 
 .detail-link:hover {
     background-color: #333;
+}
+
+.site-title {
+    color: #425465;
 }
 
