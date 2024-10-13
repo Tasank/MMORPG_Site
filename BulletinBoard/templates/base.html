@@ -19,24 +19,27 @@
         <ul>
             <li><a href="{% url 'home' %}" class="nav-link active">Главная</a></li>
             {% if user.is_authenticated %}
-                <li><a href="{% url 'account_profile' %}" class="nav-link">Профиль</a></li>
-                <li><a href="{% url 'responses' %}" class="nav-link">Мои Отклики</a></li>
-                <li><a href="{% url 'account_logout' %}" class="nav-link">Выход</a></li>
+            <li><a href="{% url 'account_profile' %}" class="nav-link">Профиль</a></li>
+            <li><a href="{% url 'responses' %}" class="nav-link">Мои Отклики</a></li>
+            <li><a href="{% url 'created_post' %}" class="nav-link">Создать объявление</a>
+            <li><a href="{% url 'account_logout' %}" class="nav-link">Выход</a></li>
             {% else %}
-                <li><a href="{% url 'account_login' %}" class="nav-link">Вход</a></li>
+            <li><a href="{% url 'account_login' %}" class="nav-link">Вход</a></li>
             {% endif %}
         </ul>
     </nav>
 </header>
 
 <main class="main">
-    <a href="{% url 'created_post' %}">Создать объявление</a>
     {% block content %}{% endblock %}
 </main>
 
-<footer class="footer">
-    <p>2024 Доска объявлений. Все права защищены.</p>
-</footer>
-
+<div class="footer-container">
+    <footer class="foot">
+        <p>&copy; 2024 BulletinBoard. Все права защищены.</p>
+        <p><a href="https://github.com/Tasank" target="_blank">Разработчик: Tasank</a></p>
+    </footer>
+</div>
 </body>
+
 </html>

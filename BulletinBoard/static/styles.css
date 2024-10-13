@@ -3,12 +3,21 @@
     font-size: 16px;
     line-height: 1.5;
     font-family: 'Montserrat', sans-serif;
+    flex-direction: column; /* делаем страницу гибкой */
+    min-height: 100vh; /* делаем минимальную высоту страницы равной высоте экрана */
+    display: flex;
+    flex-direction: column;
     margin: 0;
     padding: 0;
     background-image: url("img/background.jpg");/* путь к фоновому изображению */
     background-size: cover;
     background-position: center;
     background-attachment: fixed;
+}
+
+main {
+  flex: 1; /* делаем контент гибким */
+  padding-bottom: 20px;
 }
 
 .header {
@@ -71,18 +80,8 @@
     color: #40e0d0; /* Бирюзовый цвет для "Главная" */
 }
 
-.container-image {
-    max-width: 1200px;
-    margin: 40px auto;
-    padding: 20px;
-    background-image: url("");
-    background-size: cover;
-    background-position: center;
-    border: 1px solid #ddd;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    overflow: hidden;
-}
 
+/* Основные стили */
 :root {
     --item-width: 250px; /* ширина элемента */
     --item-height: 370px; /* высота элемента */
@@ -157,5 +156,257 @@
 
 .site-title {
     color: #425465;
+    font-size: 24px;
+    font-weight: bold;
+    margin: 0;
+    padding: 0;
+    text-align: center;
+    margin-bottom: 20px;
+}
+/* стили detail_post.html */
+body, html {
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    height: 100%;
+    overflow-x: hidden;
 }
 
+.detail-post-container {
+    position: relative;
+    width: calc(100vw - 10px);
+    height: calc(100vh - 10px);
+    margin: 5px;
+    overflow: hidden;
+    display: flex;
+    justify-content: space-between;
+    align-items: start;
+}
+
+.detail-post-container .image-container {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image: url('img/detail_post.png');
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+    z-index: 0;
+}
+
+.post-info {
+    position: absolute;
+    top: 10%;
+    right: 20%;
+    width: 35%;
+    height: 73%;
+    max-width: 590px;
+    padding: 3px;
+    background-color: rgba(255, 255, 255, 0.9);
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+    z-index: 2;
+}
+
+
+.post-actions {
+    margin-top: 20px;
+}
+
+.response-container {
+    position: absolute;
+    top: 10%;
+    left: 26%;
+    width: 14%;
+    max-width: 400px;
+    padding: 20px;
+    background-color: rgba(255, 255, 255, 0.9);
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+    z-index: 2;
+}
+
+.response-text {
+    overflow-y: auto;
+    max-height: 40px; /* установите максимальную высоту */
+    padding: 0;
+    border: 1px solid #ddd;
+    background-color: #f9f9f9;
+    overflow-y: auto;
+    background-color: transparent; /* прозрачный фон */
+    list-style: none; /* убрать точку слева */
+    padding-left: 0; /* убрать отступ слева */
+}
+.response-form {
+    position: absolute;
+    top: 50%;
+    left: 25%;
+    width: 15%;
+    max-width: 400px;
+    padding: 20px;
+    background-color: rgba(255, 255, 255, 0.9);
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+    z-index: 2;
+}
+
+.response-form textarea {
+    width: 100%;
+    height: 80px;
+    margin-bottom: 10px;
+    padding: 10px;
+    font-size: 16px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    box-sizing: border-box;
+}
+
+.response-btn {
+    width: 100%;
+    height: 50px;
+    background-image: url('img/respon.jpg');
+    background-size: cover;
+    background-position: center;
+    color: transparent;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    position: relative;
+    overflow: hidden;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: opacity 0.3s ease;
+}
+
+.response-btn::after {
+    content: 'Отправить';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    color: #fff;
+    font-size: 18px;
+    pointer-events: none;
+}
+
+.response-btn:hover {
+    opacity: 0.8;
+}
+
+.post-info, .response-container, .response-form {
+    background-color: transparent;
+    box-shadow: none;
+}
+
+.post-info, .response-container, .response-form {
+    font-family: Arial, sans-serif;
+    font-size: 16px;
+    color: #333;
+}
+
+.ck-editor__editable {
+    width: 100%;
+    min-height: 200px;
+    padding: 10px;
+    font-size: 16px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    box-sizing: border-box;
+    overflow: hidden;
+}
+
+.ck-editor__editable img {
+    max-width: 100%;
+    height: auto;
+    margin: 10px;
+}
+/* Текстовое поле ввода */
+
+.dynamic-textarea {
+    width: 100%;
+    height: 70px;
+    min-height: 70px;
+    padding: 10px;
+    font-size: 16px;
+    border: 4px solid #836B0C;
+    border-radius: 5px;
+    box-sizing: border-box;
+    resize: none;
+
+}
+textarea {
+    background-color: transparent; /* прозрачный фон */
+    border: 1px solid #836B0C; /* коричневые контуры */
+    padding: 5px; /* добавьте немного отступа */
+    font-size: 16px; /* размер шрифта */
+    color: #333; /* цвет текста */
+}
+
+.image-button {
+    padding: 0;
+    margin: 0;
+
+    border: none;
+    background: none;
+    cursor: pointer;
+    display: inline-block;
+    overflow: hidden;
+    background-color: transparent;
+}
+
+.image-button button {
+    background-color: transparent;
+    border: none;
+    padding: 0;
+    margin: 0;
+}
+
+.image-button img {
+    display: block;
+
+    width: 100%; /* Установите желаемую ширину */
+    height: auto; /* Сохраняет пропорции изображения */
+    transition: opacity 0.3s;
+    margin-top: -73px; /* поднять изображение на 20 пикселей вверх */
+}
+
+.image-button:hover img {
+    opacity: 0.5; /* Эффект затемнения при наведении */
+}
+
+
+
+
+/* Подвал */
+.foot {
+  background-color: #2f2f2f; /* темный фон */
+  padding: 0px;
+  text-align: center;
+  clear: both;
+  margin-top: 0px; /* добавляем отступ сверху */
+}
+
+.foot p {
+  color: #808080; /* серый цвет текста */
+  font-size: 16px;
+}
+
+.foot a {
+  color: #4f4f4f; /* серый цвет ссылок */
+  text-decoration: none;
+}
+
+.foot a:hover {
+  color: #ff6666; /* серый цвет ссылок при наведении */
+}
+.footer-container {
+  bottom: 0;
+  width: 100%;
+  background-color: #2f2f2f;
+  padding: 20px;
+  text-align: center;
+  z-index: 1000;
+}

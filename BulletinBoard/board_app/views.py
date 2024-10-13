@@ -32,6 +32,14 @@ class PostDetail(DetailView):
         post = self.get_object()
         user = self.request.user
 
+        # Получаем последний отклик и общее количество откликов
+        latest_response = post.response_set.order_by('-created_ad').first()
+        total_responses = post.response_set.count()
+
+        # Добавляем данные в контекст
+        context['latest_response'] = latest_response
+        context['total_responses'] = total_responses
+
         # Проверка, откликнулся ли пользователь
         if Response.objects.filter(user=user, post=post).exists():
             context['respond'] = "Откликнулся"
