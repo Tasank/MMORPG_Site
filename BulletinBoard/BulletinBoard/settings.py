@@ -175,15 +175,67 @@ customColorPalette = [
     {'color': 'hsl(207, 90%, 54%)', 'label': 'Blue'},
 ]
 
-
-CKEDITOR_5_CUSTOM_CSS = ''  # optional
+CKEDITOR_5_CUSTOM_CSS = 'static/ckeditor.css'  # optional
 CKEDITOR_5_FILE_STORAGE = "board_app.utils.CkeditorCustomStorage"  # optional
 CKEDITOR_5_CONFIGS = {
     'default': {
-        'toolbar': ['heading', '|', 'bold', 'italic', 'link',
-                    'bulletedList', 'numberedList', 'blockQuote', 'imageUpload', ],
-
+        'width': '10%',
+        'height': '',
+        'resize_minWidth': '10%',
+        'resize_maxWidth': '10%',
+        'resize_minHeight': 200,
+        'toolbar': [
+            'heading', '|', 'bold', 'italic', 'link',
+            'bulletedList', 'numberedList', 'blockQuote', 'imageUpload',
+            'fontColor', 'fontBackgroundColor', 'mediaEmbed',
+            '|',
+            'undo', 'redo'
+        ],
+        'image': {
+            'toolbar': [
+                'imageTextAlternative', '|',
+                'imageStyle:full', 'imageStyle:side',
+                'imageStyle:alignLeft', 'imageStyle:alignCenter',
+                'imageStyle:alignRight', 'imageStyle:alignTop',
+                'imageStyle:alignBottom', 'imageStyle:alignMiddle',
+                '|',
+                'imageResize', 'imageResize:original',
+                'imageResize:50', 'imageResize:75',
+                'imageRotate', 'imageFlip',
+                '|',
+                'imageCrop', 'imageReset'
+            ],
+            'styles': [
+                'full',
+                'side',
+                'alignLeft',
+                'alignRight',
+                'alignCenter',
+                'alignTop',
+                'alignBottom',
+                'alignMiddle',
+            ]
+        },
     },
+    'font': {
+        'family': [
+            'Arial', 'Calibri', 'Courier', 'Helvetica',
+            'Times New Roman', 'Verdana'
+        ],
+        'size': [
+            '8', '9', '10', '11', '12', '14', '16', '18', '20', '22', '24', '26', '28', '30', '32', '34', '36', '38',
+            '40'
+        ],
+        'color': [
+            '#000000', '#444444', '#666666', '#888888', '#AAAAAA', '#CCCCCC', '#EEEEEE', '#FFFFFF',
+            '#FF0000', '#FF9900', '#FFFF00', '#00FF00', '#0000FF', '#9900FF', '#FF00FF'
+        ],
+        'backgroundColor': [
+            '#FFFFFF', '#CCCCCC', '#AAAAAA', '#888888', '#666666', '#444444', '#000000',
+            '#FF0000', '#FF9900', '#FFFF00', '#00FF00', '#0000FF', '#9900FF', '#FF00FF'
+        ]
+    },
+
     'extends': {
         'blockToolbar': [
             'paragraph', 'heading1', 'heading2', 'heading3',
@@ -192,26 +244,49 @@ CKEDITOR_5_CONFIGS = {
             '|',
             'blockQuote',
         ],
-        'toolbar': ['heading', '|', 'outdent', 'indent', '|', 'bold', 'italic', 'link', 'underline', 'strikethrough',
-                    'code', 'subscript', 'superscript', 'highlight', '|', 'codeBlock', 'sourceEditing', 'insertImage',
-                    'bulletedList', 'numberedList', 'todoList', '|', 'blockQuote', 'imageUpload', '|',
-                    'fontSize', 'fontFamily', 'fontColor', 'fontBackgroundColor', 'mediaEmbed', 'removeFormat',
-                    'insertTable', ],
+        'toolbar': [
+            'heading', '|',
+            'outdent', 'indent', '|',
+            'bold', 'italic', 'link',
+            '|',
+            'fontColor', 'fontBackgroundColor',
+            '|',
+            'bulletedList', 'numberedList',
+            '|',
+            'blockQuote',
+            '|',
+            'undo', 'redo'
+        ],
         'image': {
-            'toolbar': ['imageTextAlternative', '|', 'imageStyle:alignLeft',
-                        'imageStyle:alignRight', 'imageStyle:alignCenter', 'imageStyle:side', '|'],
+            'toolbar': [
+                'imageTextAlternative', '|',
+                'imageStyle:full', 'imageStyle:side',
+                'imageStyle:alignLeft', 'imageStyle:alignCenter',
+                'imageStyle:alignRight', 'imageStyle:alignTop',
+                'imageStyle:alignBottom', 'imageStyle:alignMiddle',
+                '|',
+                'imageResize', 'imageResize:original',
+                'imageResize:50', 'imageResize:75',
+                'imageRotate', 'imageFlip',
+                '|',
+                'imageCrop', 'imageReset'
+            ],
             'styles': [
                 'full',
                 'side',
                 'alignLeft',
                 'alignRight',
                 'alignCenter',
+                'alignTop',
+                'alignBottom',
+                'alignMiddle',
             ]
-
         },
         'table': {
-            'contentToolbar': ['tableColumn', 'tableRow', 'mergeTableCells',
-                               'tableProperties', 'tableCellProperties'],
+            'contentToolbar': [
+                'tableColumn', 'tableRow', 'mergeTableCells',
+                'tableProperties', 'tableCellProperties'
+            ],
             'tableProperties': {
                 'borderColors': customColorPalette,
                 'backgroundColors': customColorPalette
@@ -228,14 +303,22 @@ CKEDITOR_5_CONFIGS = {
                 {'model': 'heading2', 'view': 'h2', 'title': 'Heading 2', 'class': 'ck-heading_heading2'},
                 {'model': 'heading3', 'view': 'h3', 'title': 'Heading 3', 'class': 'ck-heading_heading3'}
             ]
-        }
+        },
     },
     'list': {
         'properties': {
             'styles': 'true',
             'startIndex': 'true',
             'reversed': 'true',
-        }
+            'custom': 'true',
+            'customClasses': 'true',
+            'start': '1',
+        },
+        'styles': [
+            'lower-alpha', 'lower-roman', 'upper-alpha', 'upper-roman',
+            'decimal'
+        ],
+        'classes': {}
     }
 }
 # CKEDITOR
