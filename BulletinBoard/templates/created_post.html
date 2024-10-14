@@ -6,7 +6,24 @@
         <form method="post" action="{% url 'created_post' %}" enctype="multipart/form-data">
             {% csrf_token %}
             {{ form.media }}
-            {{ form.as_p }}
+            <div>
+                <h3>
+                    <label for="{{ form.title.id_for_label }}">Название: </label>
+                    {{ form.title }}
+                </h3>
+            </div>
+            <div>
+                <h3>
+                    <label for="{{ form.category.id_for_label }}">Категория: </label>
+                    {{ form.category }}
+                </h3>
+            </div>
+            <div>
+                <h3>
+                    <label for="{{ form.text.id_for_label }}">Введите текст: </label>
+                    {{ form.text }}
+                </h3>
+            </div>
             <button type="submit" class="btn btn-dark">Сохранить</button>
         </form>
     </div>

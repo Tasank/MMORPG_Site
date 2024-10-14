@@ -58,6 +58,7 @@ class CreatePost(LoginRequiredMixin, PermissionRequiredMixin, CreateView):
     form_class = PostCreateForm
     permission_required = 'board.add_post'
 
+
     # Сохранение поста с указанием текущего пользователя как автора
     def form_valid(self, form):
         post = form.save(commit=False)
