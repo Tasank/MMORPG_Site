@@ -25,22 +25,23 @@
         <h2>Отклики:</h2>
         <p>Всего откликов: {{ total_responses }}</p>
         {% if latest_response %}
-        <ul>
-            <li>
-                <div class="last-response">
-                    <div class="response-text">{{ latest_response.text }}</div>
+
+            <div class="last-response">
+                <div class="response-text">{{ latest_response.text }}</div>
                     <p><strong>Автор:</strong> {{ latest_response.user }}</p>
                     <p><strong>Дата создания:</strong> {{ latest_response.created_ad|date:"d.m.Y H:i" }}</p>
                     <p><strong>Статус:</strong> {{ latest_response.get_status_display }}</p>
-                    {% if latest_response.status == 'pending' %}
-                    <div class="response-actions">
-                        <a href="{% url 'accept_response' latest_response.id %}">Принять</a>
-                        <a href="{% url 'delete_response' latest_response.id %}">Отклонить</a>
-                    </div>
-                    {% endif %}
                 </div>
-            </li>
-        </ul>
+
+            {% if latest_response.status == 'pending' %}
+                <div class="response-actions" style="display: block;">
+                    <a href="{% url 'accept_response' latest_response.id %}">Принять</a>
+                    <a href="{% url 'delete_response' latest_response.id %}">Отклонить</a>
+                </div>
+            {% endif %}
+
+
+
         {% else %}
         <p>Откликов пока нет.</p>
         {% endif %}

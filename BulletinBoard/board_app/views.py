@@ -134,20 +134,20 @@ class ResponsesView(LoginRequiredMixin, ListView):
 
 
 @login_required
-def response_accept(request, pk):
+def accept_response(request, pk):
     response = get_object_or_404(Response, id=pk)
     response.status = Response.STATUS_ACCEPTED
     response.save()
     # Отправка уведомления отклика
     respond_accept_send_email.delay(response_id=response.id)
-    return redirect('responses')
+    return redirect(reverse_lazy('detail_post', kwargs={'post_id': response.post.id}))
 
 
 @login_required
-def response_delete(request, pk):
+def delete_response(request, pk):
     response = get_object_or_404(Response, id=pk)
     response.delete()
-    return redirect('responses')
+    return redirect(reverse_lazy('detail_post', kwargs={'post_id': response.post.id}))
 
 
 class RespondCreateView(LoginRequiredMixin, CreateView):
