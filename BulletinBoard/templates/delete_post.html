@@ -1,13 +1,19 @@
 {% extends 'base.html' %}
-
+{% load static %}
 {% block content %}
-<h1>Удалить объявление</h1>
-<p>Вы уверены, что хотите удалить объявление "{{ object.title }}"?</p>
-<form method="post">
-    {% csrf_token %}
-    {{ form.media }}
-    {{ form.as_p }}
-    <button type="submit">Удалить</button>
-    <a href="{% url 'detail_post' object.pk %}">Отмена</a>
-</form>
+<script src="{% static 'script.js' %}"></script>
+<div class="delete-container">
+  <img src="{% static 'img/delete_img.png' %}" alt="Удалить объявление" class="delete-img">
+  <div class="delete-text">
+    <h1>Удалить объявление </h1>
+    <p>Вы уверены, что хотите удалить объявление "{{ object.title }}"?</p>
+    <form method="post">
+      {% csrf_token %}
+      {{ form.media }}
+      {{ form.as_p }}
+      <button type="submit" class="delete-btn">Удалить</button>
+      <a href="{% url 'detail_post' object.pk %}" class="cancel-btn">Отмена</a>
+    </form>
+  </div>
+</div>
 {% endblock %}

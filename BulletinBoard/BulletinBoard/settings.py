@@ -179,18 +179,41 @@ CKEDITOR_5_CUSTOM_CSS = 'static/ckeditor.css'  # optional
 CKEDITOR_5_FILE_STORAGE = "board_app.utils.CkeditorCustomStorage"  # optional
 CKEDITOR_5_CONFIGS = {
     'default': {
-        'width': '10%',
-        'height': '',
+        'width': '100%',
+        'height': '300px',
         'resize_minWidth': '10%',
         'resize_maxWidth': '10%',
-        'resize_minHeight': 200,
+        'resize_minHeight': 300,
         'toolbar': [
             'heading', '|', 'bold', 'italic', 'link',
             'bulletedList', 'numberedList', 'blockQuote', 'imageUpload',
             'fontColor', 'fontBackgroundColor', 'mediaEmbed',
             '|',
-            'undo', 'redo'
+            'undo', 'redo', '|',
+            'outdent', 'indent', 'alignment:left', 'alignment:center', 'alignment:right', 'alignment:justify',
+            'resize', 'move'
         ],
+        'alignment': {
+            'options': [
+                'left',
+                'right',
+                'center',
+                'justify'
+            ]
+        },
+        'resize': {
+            'unit': 'px',
+            'minWidth': 100,
+            'maxWidth': 800,
+            'minHeight': 100,
+            'maxHeight': 600,
+            'directions': ['horizontal', 'vertical'],
+            'handles': ['n', 's', 'e', 'w']
+        },
+        'move': {
+            'x': True,
+            'y': True
+        },
         'image': {
             'toolbar': [
                 'imageTextAlternative', '|',
@@ -217,6 +240,21 @@ CKEDITOR_5_CONFIGS = {
             ]
         },
     },
+    'mediaEmbed': {
+        'providers': [
+            {
+                'name': 'YouTube',
+                'url': 'https://www.youtube.com/oembed',
+                'html': '<iframe width="100%" height="100%" src="{url}" frameborder="0" allowfullscreen></iframe>'
+            },
+            {
+                'name': 'Vimeo',
+                'url': 'https://vimeo.com/api/oembed.json',
+                'html': '<iframe width="100%" height="100%" src="{url}" frameborder="0" allowfullscreen></iframe>'
+            }
+        ]
+    },
+
     'font': {
         'family': [
             'Arial', 'Calibri', 'Courier', 'Helvetica',

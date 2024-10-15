@@ -1,11 +1,22 @@
 {% extends 'base.html' %}
-
+{% load static %}
 {% block content %}
-  <h1>Редактировать объявление</h1>
-  <form method="post">
-    {% csrf_token %}
-    {{ form.media }}
-    {{ form.as_p }}
-    <button type="submit">Сохранить изменения</button>
-  </form>
+
+<div class="create-post-container">
+    <div class="create-post-form">
+        <h1>Редактировать объявление</h1>
+
+        <form method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            {{ form.media }}
+            {{ form.as_p }}
+
+
+            <button type="submit" class="custom-submit-button">
+                <img src="{% static 'img/save_button.png' %}" alt="Сохранить">
+            </button>
+        </form>
+    </div>
+</div>
 {% endblock %}
+____
