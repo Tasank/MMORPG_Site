@@ -508,6 +508,7 @@ textarea {
     padding: 5px; /* добавьте немного отступа */
     font-size: 16px; /* размер шрифта */
     color: #333; /* цвет текста */
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
 }
 
 .image-button {
@@ -658,6 +659,112 @@ textarea {
 .response-link-delete {
     color: #FF0000 !important; /* Ярко-красный цвет для ссылки "удалить" */
     text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5); /* Добавление тени для лучшей читаемости */
+}
+
+
+/* Стили для respond.html */
+.respond-text {
+  color: #fff; /* белый цвет текста */
+  font-size: 24px; /* размер шрифта */
+  font-weight: bold; /* сделать текст жирным */
+}
+
+label[for="id_text"] {
+  color: #fff; /* белый цвет */
+  font-weight: bold; /* жирный шрифт */
+}
+
+#response-text-input {
+  color: #fff; /* белый цвет */
+  width: 400px;
+  height: 200px;
+}
+#response-text-input:focus {
+  outline: none;
+}
+.save-button-a {
+  margin-top: 10px;
+  display: block;
+}
+ul.errorlist {
+  color: #FF2B2B; /* белый цвет */
+  font-weight: bold; /* жирный шрифт */
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
+}
+/* Стили для profile.html */
+.profile-container {
+    position: relative;
+    width: 80%;
+    height: 80vh;
+    background-image: url('img/profile.png');
+    background-size: contain;
+    background-position: center;
+    background-repeat: no-repeat;
+    margin: 0 auto;
+}
+
+.profile-info {
+    position: absolute;
+    top: 19%;
+    left: 50%;
+    transform: translateX(-50%);
+    text-align: center;
+    color: #000;
+    font-size: 18px;
+}
+
+.profile-info h3 {
+    font-size: 24px;
+    margin-bottom: 10px;
+}
+
+.profile-info h5 {
+    font-size: 18px;
+    margin-bottom: 5px;
+}
+
+.profile-actions {
+    position: absolute;
+    top: 70%;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    text-align: center;
+    color: #fff;
+    font-weight: bold; /* жирный шрифт */
+}
+
+
+.profile-actions a {
+    display: block; /* Размещает ссылки в столбик */
+    font-size: 18px;
+    margin: 10px 0; /* Вертикальные отступы между ссылками */
+    color: #007bff; /* Выберите подходящий цвет для ссылок */
+    text-decoration: none; /* Убирает подчеркивание */
+}
+
+.profile-actions a:hover {
+    color: #0056b3; /* Изменение цвета при наведении */
+    text-decoration: underline; /* Подчеркивание при наведении */
+}
+
+.auth-container {
+    position: absolute;
+    top: 10px;
+    left: -150px;
+    text-align: left;
+    color: #fff;
+    font-size: 18px;
+}
+
+.auth-container h5 {
+    font-size: 18px;
+    margin-bottom: 5px;
+}
+
+.auth-container a {
+    font-size: 18px;
+    margin: 5px;
 }
 
 

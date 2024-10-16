@@ -1,4 +1,3 @@
-from django.shortcuts import redirect
 from django.urls import path
 from .views import PostList, CreatePost, PostDetail, EditPost, DeletePost, ResponsesView, RespondCreateView, \
     accept_response, delete_response

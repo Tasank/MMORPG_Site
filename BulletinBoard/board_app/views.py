@@ -161,6 +161,7 @@ class RespondCreateView(LoginRequiredMixin, CreateView):
         respond = form.save(commit=False)
         respond.user = self.request.user
         respond.post = get_object_or_404(Post, id=self.kwargs.get('pk'))
+        respond.text = self.request.POST.get('response_text')  # сохранить текст отклика
         respond.save()
         respond_send_email.delay(respond_id=respond.id)
         return redirect('detail_post', pk=self.kwargs.get('pk'))

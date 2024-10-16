@@ -51,7 +51,7 @@
         <h2>Оставить отклик:</h2>
         <form method="post" action="{% url 'respond' post.pk %}">
             {% csrf_token %}
-            <textarea class="dynamic-textarea" rows="4" cols="50"></textarea>
+            <textarea class="dynamic-textarea" rows="4" cols="50" id="response-text"></textarea>
             <div class="image-button">
                 <button type="submit">
                     <img src="{% static 'img/respon.png' %}" alt="Изображение">
