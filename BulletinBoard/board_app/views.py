@@ -117,7 +117,7 @@ class ResponsesView(LoginRequiredMixin, ListView):
         title = self.request.GET.get('title')
         filter_params = {'post__author': self.request.user}
         if title:
-            filter_params['posttitleicontains'] = title
+            filter_params['post__title__icontains'] = title
 
         context['filter_responses'] = Response.objects.filter(**filter_params).order_by('-created_ad')
 

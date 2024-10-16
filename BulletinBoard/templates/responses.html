@@ -2,56 +2,55 @@
 {% load static %}
 
 {% block title %}Responses{% endblock title %}
-
 {% block content %}
-<h3>Фильтр откликов на мои объявления:</h3>
-<form method="GET">
+<h3 class="large-text text-color-primary">Фильтр откликов на мои объявления:</h3>
+<form method="GET" class="large-text text-color-primary">
     {{ form.as_p }}
-    <input class="btn btn-secondary" type="submit" value="Показать">
+    <input class="btn btn-secondary large-text" type="submit" value="Показать">
 </form>
-
 {% if title %}
-<h3>Отклики на мое объявление: {{ title }}</h3>
+<h3 class="large-text text-color-primary">Отклики на мое объявление: {{ title }}</h3>
 {% else %}
-<h3>Отклики на все мои объявления:</h3>
+<h3 class="large-text text-color-primary">Отклики на все мои объявления:</h3>
 {% endif %}
 
 {% if filter_responses %}
 {% for response in filter_responses %}
-<div>
+<div class="large-text text-color-primary">
     <b>Объявление:</b>
-    <a href="{% url 'detail_post' response.post.id %}">{{ response.post.title }}</a>
+    <a href="{% url 'detail_post' response.post.id %}" class="response-link">{{ response.post.title }}</a>
     <b>Отклик:</b> {{ response.text }}
     <b>Автор:</b> {{ response.user.username }}
     <b>Дата:</b> {{ response.created_ad|date:'d.M.Y' }}
     {% if response.status == 'pending' %}
-    <a href="{% url 'accept_response' response.id %}" style="color:green">принять</a>
-    <a href="{% url 'delete_response' response.id %}" style="color:red">удалить</a>
+    <a href="{% url 'accept_response' response.id %}" class="response-link">принять</a>
+    <a href="{% url 'delete_response' response.id %}" class="response-link-delete">удалить</a>
     {% else %}
-    <span style="color:green">отклик принят</span>
+    <span class="response-status-text">отклик принят</span>
     {% endif %}
 </div>
 {% endfor %}
 {% else %}
-<h5>Откликов нет!</h5>
+<h5 class="large-text text-color-primary">Откликов нет!</h5>
 {% endif %}
 
-<h3>Мои отклики на объявления:</h3>
+<h3 class="large-text text-color-primary">Мои отклики на объявления:</h3>
 {% if myresponses %}
 {% for response in myresponses %}
-<div>
+<div class="large-text text-color-primary">
     <b>Объявление:</b>
-    <a href="{% url 'detail_post' response.post.id %}">{{ response.post.title }}</a>
+    <a href="{% url 'detail_post' response.post.id %}" class="response-link">{{ response.post.title }}</a>
     <b>Мой отклик:</b> {{ response.text }}
     <b>Дата:</b> {{ response.created_ad|date:'d.M.Y' }}
     {% if response.status == 'accepted' %}
-        <span style="color:green">Автор объявления принял отклик!</span>
+        <span class="response-status-text">Автор объявления принял отклик!</span>
     {% else %}
-        <span style="color:red">Автор объявления пока не принял отклик!</span>
+        <span class="response-status-pending">Автор объявления пока не принял отклик!</span>
     {% endif %}
 </div>
 {% endfor %}
 {% else %}
-<h5>Откликов нет!</h5>
+<h5 class="large-text text-color-primary">Откликов нет!</h5>
 {% endif %}
 {% endblock content %}
+
