@@ -2,22 +2,14 @@
 {% block title %}Отклик{% endblock title %}
 {% load static %}
 
-<script>
-    // Получить текст из textarea и заполнить скрытое поле ввода
-    document.getElementById('response-text').addEventListener('input', function() {
-      document.getElementById('response-text-hidden').value = this.value;
-    });
-</script>
-
 {% block content %}
 <br>
 <h3 class="respond-text">Текст отклика:</h3>
 <br>
-<form method="post" enctype="multipart/form-data">
+<form method="post" enctype="multipart/form-data" >
     {% csrf_token %}
-    <textarea class="dynamic-textarea" id="response-text-input" rows="20" cols="20" name="response_text">{{ response_text }}</textarea>
-    <input type="hidden" id="response-text-hidden" name="response_text" value="{{ response_text }}">
-    <input class="save-button-a" type="submit" value="Сохранить">
+    <textarea class="dynamic-textarea" id="response-text-input" rows="20" cols="20" name="text"></textarea>
+    <input class="btn btn-secondary save-button-a" type="submit" value="Сохранить">
 </form>
 <br>
     <input type=button value="Назад" onClick="javascript:history.go(-1);">

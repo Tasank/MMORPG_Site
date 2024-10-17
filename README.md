@@ -22,21 +22,24 @@ BulletinBoard - это интернет-ресурс для фанатского
 **Скриншоты**
 -------------
 
-![Скриншот 1: Главная страница](media/screenshot1.png)
-![Скриншот 2: Создание объявления](media/screenshot2.png)
-![Скриншот 3: Отклики на объявление](media/screenshot3.png)
+### 1. Главная страница
+<img src="media/screenshot1.png" alt="Скриншот 1: Главная страница" style="width: 100%; height: auto;" />
+
+### 2. Информация о объявлении
+<img src="media/screenshot2.png" alt="Скриншот 2: Создание объявления" style="width: 100%; height: auto;" />
+
+### 3. Профиль
+<img src="media/screenshot3.png" alt="Скриншот 3: Отклики на объявление" style="width: 100%; height: auto;" />
 
 **GIF-анимации**
 ----------------
 
-![Гиф 1: Регистрация пользователя](media/gif1.gif)
-![Гиф 2: Создание объявления](media/gif2.gif)
-![Гиф 3: Отправка отклика](media/gif3.gif)
+<img src="media/gif1.gif" alt="Гиф 1: Анимация удаления Объявления" style="width: 100%; height: auto;" />
 
 **Видео**
 ---------
 
-![Видео: Обзор функционала](media/video.mp4)
+<video src="media/video.mp4" alt="Видео: Обзор функционала" style="width: 100%; height: auto;" controls></video>
 
 **Технологии**
 --------------

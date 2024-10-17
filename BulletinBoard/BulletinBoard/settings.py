@@ -156,11 +156,11 @@ ACCOUNT_USERNAME_REQUIRED = False
 ACCOUNT_AUTHENTICATION_METHOD = 'email'
 ACCOUNT_EMAIL_VERIFICATION = 'none'
 
-EMAIL_HOST = 'smtp.gmail.com'
-EMAIL_PORT = 587
-EMAIL_USE_TLS = True
-EMAIL_HOST_USER = 'test_email@gmail.com'
-EMAIL_HOST_PASSWORD = 'test_password'
+# EMAIL_HOST = 'smtp.gmail.com'
+# EMAIL_PORT = 587
+# EMAIL_USE_TLS = True
+# EMAIL_HOST_USER = 'test_email@gmail.com'
+# EMAIL_HOST_PASSWORD = 'test_password'
 
 # фейковый SMTP-сервер для тестирования
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
