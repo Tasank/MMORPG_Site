@@ -22,21 +22,21 @@ BulletinBoard - это интернет-ресурс для фанатского
 **Скриншоты**
 -------------
 
-[Скриншот 1: Главная страница](https://example.com/screenshot1.png)
-[Скриншот 2: Создание объявления](https://example.com/screenshot2.png)
-[Скриншот 3: Отклики на объявление](https://example.com/screenshot3.png)
+![Скриншот 1: Главная страница](media/screenshot1.png)
+![Скриншот 2: Создание объявления](media/screenshot2.png)
+![Скриншот 3: Отклики на объявление](media/screenshot3.png)
 
 **GIF-анимации**
 ----------------
 
-[Гиф 1: Регистрация пользователя](https://example.com/gif1.gif)
-[Гиф 2: Создание объявления](https://example.com/gif2.gif)
-[Гиф 3: Отправка отклика](https://example.com/gif3.gif)
+![Гиф 1: Регистрация пользователя](media/gif1.gif)
+![Гиф 2: Создание объявления](media/gif2.gif)
+![Гиф 3: Отправка отклика](media/gif3.gif)
 
 **Видео**
 ---------
 
-[Видео: Обзор функционала](https://example.com/video.mp4)
+![Видео: Обзор функционала](media/video.mp4)
 
 **Технологии**
 --------------
@@ -61,5 +61,5 @@ BulletinBoard - это интернет-ресурс для фанатского
 **Контакты**
 -------------
 
-*   Автор: [Ваше имя](https://example.com)
-*   Email: [Ваш email](mailto:example@example.com)
+*   Автор: [Максим Апанасович](https://github.com/Tasank)
+*   Email: [apansovich04@mail.ru](mailto:apanasovich04@mail.ru)
