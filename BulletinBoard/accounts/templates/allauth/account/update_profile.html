@@ -2,17 +2,15 @@
 
 {% block title %}Profile update{% endblock %}
 {% block content %}
-
-<br><br>
-<h2>Редактирование профиля:</h2><br>
-
-<form method="post">
-	{% csrf_token %}
-	{{ form.as_p }}
-    <input type="submit" value="Сохранить">
-</form>
-
-<a class="btn btn-secondary" href="{% url 'account_profile' %}" role="button">Закрыть</a>
-<a class="btn btn-secondary" href="{% url 'account_logout' %}" role="button">Выйти из аккаунта</a>
-
+<div class="profile-update-container">
+  <br><br>
+  <h2>Редактирование профиля:</h2><br>
+  <form method="post">
+      {% csrf_token %}
+      {{ form.as_p }}
+      <input type="submit" value="Сохранить">
+  </form>
+  <a class="btn btn-secondary" href="{% url 'account_profile' %}" role="button">Закрыть</a>
+  <a class="btn btn-secondary" href="{% url 'account_logout' %}" role="button">Выйти из аккаунта</a>
+</div>
 {% endblock content %}

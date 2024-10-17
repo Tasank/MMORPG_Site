@@ -359,6 +359,6 @@ CKEDITOR_5_CONFIGS = {
         'classes': {}
     }
 }
-# CKEDITOR
+
 # CKEDITOR_UPLOAD_PATH = "uploads/"
 CKEDITOR_5_UPLOAD_FILE_TYPES = ['jpeg', 'jpg', 'png']

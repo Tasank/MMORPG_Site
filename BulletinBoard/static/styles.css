@@ -767,6 +767,58 @@ ul.errorlist {
     margin: 5px;
 }
 
+/* Стили для update_profile.html */
+.profile-update-container {
+  background-color: rgba(255, 255, 255, 0.8);
+  padding: 20px;
+  max-width: 50%;
+
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+}
+
+.profile-update-container h2 {
+  color: #333;
+  margin-bottom: 10px;
+}
+
+.profile-update-container form {
+  margin-bottom: 20px;
+}
+
+.profile-update-container input[type="submit"] {
+  background-color: #4CAF50;
+  color: #fff;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.profile-update-container input[type="submit"]:hover {
+  background-color: #3e8e41;
+}
+
+.profile-update-container a {
+  margin-top: 10px;
+  display: block;
+  text-align: center;
+}
+
+.profile-update-container a.btn.btn-secondary {
+  background-color: #4CAF50;
+  color: #fff;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.profile-update-container a.btn.btn-secondary:hover {
+  background-color: #3e8e41;
+}
+
+/* Стили для login.html */
 
 /* Подвал */
 .foot {
