@@ -56,7 +56,7 @@ BulletinBoard - это интернет-ресурс для фанатского
 **Установка**
 --------------
 
-1.  Клонировать репозиторий: `git clone https://example.com/bulletinboard.git`
+1.  Клонировать репозиторий: `git clone https://github.com/Tasank/MMORPG_Site.git`
 2.  Установить зависимости: `pip install -r requirements.txt`
 3.  Выполнить миграции: `python manage.py migrate`
 4.  Запустить сервер: `python manage.py runserver`
