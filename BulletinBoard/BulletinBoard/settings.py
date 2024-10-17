@@ -175,7 +175,7 @@ customColorPalette = [
     {'color': 'hsl(207, 90%, 54%)', 'label': 'Blue'},
 ]
 
-CKEDITOR_5_CUSTOM_CSS = 'static/ckeditor.css'  # optional
+CKEDITOR_5_CUSTOM_CSS = ''  # optional
 CKEDITOR_5_FILE_STORAGE = "board_app.utils.CkeditorCustomStorage"  # optional
 CKEDITOR_5_CONFIGS = {
     'default': {

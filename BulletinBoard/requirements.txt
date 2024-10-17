@@ -1,2 +1,5 @@
-django-ckeditor-5
-
+Django==5.1.2
+django-allauth==0.61.1
+django-ckeditor-5==0.2.13
+redis==5.0.1
+celery==5.4.0
